@@ -14,7 +14,25 @@ cam1 = camera("","","Внутренняя","")
 cameras.append(cam1)
 cam1 = camera("","","Внутривенная","")
 cameras.append(cam1)
+
+
 doors = []
+dor = door("Вход", "", "", "", "", "")
+doors.append(dor)
+dor = door("Выход", "", "", "", "", "")
+doors.append(dor)
+
+dor = door("Служебная", "", "", "", "", "")
+doors.append(dor)
+
+dor = door("Туалет", "", "", "", "", "")
+doors.append(dor)
+
+
+sensors = []
+for i in range(10):
+    sensors.append(sensor(f"Sensor no {i}", '', '', '', ''))
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -33,6 +51,18 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif data == b"get_cameras":
                     res = ''
                     for i in cameras:
+                        res += i.name + " "
+                    print(res)
+                    conn.sendall(bytes(res, "utf-8"))
+                elif data == b"get_doors":
+                    res = ''
+                    for i in  doors:
+                        res += i.name + " "
+                    print(res)
+                    conn.sendall(bytes(res, "utf-8"))
+                elif data == b"get_sensors":
+                    res = ''
+                    for i in sensors:
                         res += i.name + " "
                     print(res)
                     conn.sendall(bytes(res, "utf-8"))

@@ -30,5 +30,15 @@ class door:
             resp = s.recv(1024)
             return resp
 
+class sensor:
+    def __init__(self, name, location,  ip, level, port):
+        self.name = name
+        self.location = location
+        self.ip = ip
+        self.level = level
+        self.port = port
+
+
+
 
 
