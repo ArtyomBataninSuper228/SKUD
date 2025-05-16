@@ -52,19 +52,19 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif data == b"get_cameras":
                     res = ''
                     for i in cameras:
-                        res += i.name + " "
+                        res += i.name + "\n"
                     print(res)
                     conn.sendall(bytes(res, "utf-8"))
                 elif data == b"get_doors":
                     res = ''
                     for i in  doors:
-                        res += i.name + " "
+                        res += i.name + "\n"
                     print(res)
                     conn.sendall(bytes(res, "utf-8"))
                 elif data == b"get_sensors":
                     res = ''
                     for i in sensors:
-                        res += i.name + " "
+                        res += i.name + "\n"
                     print(res)
                     conn.sendall(bytes(res, "utf-8"))
                 else:
