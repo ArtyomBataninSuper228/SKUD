@@ -1,12 +1,13 @@
 from PTZ import *
 import socket
+import logging
 class camera:
     def __init__(self, ip, location, name, port):
         self.ip = ip
         self.location = location
         self.name = name
         self.port = port
-        self.ptz_sys = ptz(self.port)
+        self.ptz_sys = PTZ(self.port)
 
     def start_detecting(self):
         CLASSES = yaml_load(check_yaml("coco8.yaml"))["names"]
@@ -153,9 +154,12 @@ class door:
         self.ip = ip
         self.level = level
         self.port = port
+
     def open(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip, self.port))
             s.sendall(b"Open the door")
             resp = s.recv(1024)
             return resp
+
+
