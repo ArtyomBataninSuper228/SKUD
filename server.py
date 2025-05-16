@@ -34,6 +34,7 @@ for i in range(10):
     sensors.append(sensor(f"Sensor no {i}", '', '', '', ''))
 
 
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     while 1:
