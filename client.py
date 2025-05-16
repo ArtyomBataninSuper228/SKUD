@@ -14,3 +14,4 @@ PORT = 65432  # The port used by the server
 
 
 print(f"Received {response(HOST,PORT,b'1 1999')!r}")
+print(f"Received {response(HOST,PORT,b'get_time')!r}")
