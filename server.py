@@ -1,5 +1,4 @@
 import socket
-
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 
@@ -15,5 +14,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 data = conn.recv(1024)
                 if not data:
                     break
-                conn.sendall(bytes("Hello!", "utf-8"))
-                conn
+                st= str(data, "utf-8")
+                a, b = map(int, st.split())
+                conn.sendall(bytes(f"{a+b}", "utf-8"))
+                continue
