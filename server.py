@@ -72,18 +72,18 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif st.split()[0] == 'get_camera':
                     num = int(st.split()[1])
                     cam = cameras[num]
-                    res = f"{cam.name} {cam.location} {cam.ip}{cam.port}"
+                    res = f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}"
                     print(res)
                     conn.sendall(bytes(res, "utf-8"))
                 elif st.split()[0] == "get_door":
                     num = int(st.split()[1])
                     cam = doors[num]
-                    res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
+                    res = (f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}")
                     conn.sendall(bytes(res, "utf-8"))
                 elif st.split()[0] == "get_sensor":
                     num = int(st.split()[1])
                     cam = sensors[num]
-                    res = (f"{cam.name}{cam.location} {cam.ip} {cam.port}")
+                    res = (f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}")
                     conn.sendall(bytes(res, "utf-8"))
                 else:
 
