@@ -20,7 +20,6 @@ PORT = 65432  # The port used by the server
 dpg.create_context()
 dpg.create_viewport(title='Client', width=600, height=300)
 
-
 def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
