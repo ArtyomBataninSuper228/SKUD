@@ -1,4 +1,5 @@
 from PTZ import *
+
 class camera:
     def __init__(self, ip, location, name, port):
         self.ip = ip
@@ -6,6 +7,7 @@ class camera:
         self.name = name
         self.port = port
         self.ptz_sys = ptz(self.port)
+
     def start_detecting(self):
         CLASSES = yaml_load(check_yaml("coco8.yaml"))["names"]
         colors = np.random.uniform(0, 255, size=(len(CLASSES), 3))
@@ -142,3 +144,8 @@ class camera:
                 ay = 0
                 # Read the input image
             cv2.destroyAllWindows()
+class door:
+    def __init__(self, name, location, is_opened, ):
+        self.name = name
+        self.location = location
+        self.is_opened = is_opened
