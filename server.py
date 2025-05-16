@@ -17,15 +17,15 @@ cameras.append(cam1)
 
 
 doors = []
-dor = door("Вход", "У входа", "", "192", "", "55")
+dor = door("Вход", "У входа", "192", "", "55")
 doors.append(dor)
-dor = door("Выход", "У входа", "", "192", "", "55")
-doors.append(dor)
-
-dor = door("Служебная", "У входа", "", "192", "", "55")
+dor = door("Выход", "У входа", "192", "", "55")
 doors.append(dor)
 
-dor = door("Туалет", "У входа", "", "192", "", "55")
+dor = door("Служебная", "У входа", "192", "", "55")
+doors.append(dor)
+
+dor = door("Туалет", "У входа", "192", "", "55")
 doors.append(dor)
 
 
