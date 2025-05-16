@@ -16,6 +16,7 @@ cam1 = camera("","","Внутривенная","")
 cameras.append(cam1)
 doors = []
 
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     while 1:
