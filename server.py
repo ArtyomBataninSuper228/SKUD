@@ -78,7 +78,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif st.split()[0] == "get_door":
                     num = int(st.split()[1])
                     dor = doors[num]
-                    res = (f"{dor.name}\n{dor.location}\n{dor.ip}\n{dor.port}")
+                    res = (f"{dor.name}\n{dor.location}\n{dor.ip}\n{dor.port}\n{dor.level}")
                     conn.sendall(bytes(res, "utf-8"))
                 elif st.split()[0] == "get_sensor":
                     num = int(st.split()[1])
