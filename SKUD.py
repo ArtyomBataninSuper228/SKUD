@@ -15,10 +15,10 @@ class camera:
         pass
 
 class door:
-    def __init__(self, name, location, is_opened, ip, level, port):
+    def __init__(self, name, location, ip, level, port):
         self.name = name
         self.location = location
-        self.is_opened = is_opened
+        self.is_opened = False
         self.ip = ip
         self.level = level
         self.port = port
