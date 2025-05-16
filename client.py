@@ -48,7 +48,7 @@ with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(scr
         dpg.add_button(label="Get_data", callback=lambda m, s:upgate(id_e) )
     dpg.add_input_text(label="string", default_value="Quick brown fox")
     dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
-    #123445
+    #1
     with dpg.group(horizontal=True):
         dpg.add_listbox(cameras,num_items=15,width=400,label="Tabs")
         dpg.add_listbox(doors, num_items=15,width=400, label="Tabs")
