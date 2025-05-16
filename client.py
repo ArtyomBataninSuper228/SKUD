@@ -42,21 +42,18 @@ def cameras_callback(sender, data):
         number_camera=cameras.index(data)
         s = response(HOST, PORT, bytes(f'get_camera {number_camera}', 'utf8')).decode('utf-8')
         dpg.add_text(s)
-        dpg.add_text(data)
         id_w = dpg.last_item()
 def doors_callback(sender, data):
     with dpg.window(width=300, height=300):
         number_door=doors.index(data)
         s = response(HOST, PORT, bytes(f'get_door {number_door}', 'utf8')).decode('utf-8')
         dpg.add_text(s)
-        dpg.add_text(data)
         id_w = dpg.last_item()
 def sensors_callback(sender, data):
     with dpg.window(width=300, height=300):
         number_sensor=sensors.index(data)
         s=response(HOST, PORT, bytes(f'get_sensor {number_sensor}','utf8')).decode('utf-8')
         dpg.add_text(s)
-        dpg.add_text(data)
         id_w = dpg.last_item()
 
 
