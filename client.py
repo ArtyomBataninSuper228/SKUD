@@ -20,6 +20,20 @@ PORT = 65432  # The port used by the server
 dpg.create_context()
 dpg.create_viewport(title='Client', width=600, height=300)
 
+
+text_size = 20
+
+with dpg.font_registry():
+    with dpg.font("Game/NotoMono-Regular.ttf", text_size) as font:
+        dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
+    with dpg.font("Game/NotoMono-Regular.ttf", text_size + 10) as big_font:
+        dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
+    with dpg.font("Game/Domino Italic.otf", text_size) as font_domino:
+        dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
+    with dpg.font("Game/Domino Italic.otf", text_size + 10) as big_font_domino:
+        dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
+dpg.bind_font(font_domino)
+
 def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
