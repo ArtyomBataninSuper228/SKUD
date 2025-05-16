@@ -16,7 +16,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 data = conn.recv(1024)
                 if not data:
                     break
-                elif str(data) == "get_time":
+                elif data == b"get_time":
                     conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
+                else:
+                    conn.sendall(b"Error")
                 continue
 
