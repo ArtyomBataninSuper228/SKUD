@@ -1,7 +1,6 @@
 import sys
 import time
 
-import pygame as pg
 import serial
 from threading import Thread
 import sys
