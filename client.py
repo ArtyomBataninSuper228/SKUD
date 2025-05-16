@@ -51,7 +51,7 @@ def cameras_callback(sender, data):
             dpg.add_input_text(hint='Введите ip')
             dpg.add_input_text(hint='Введите порт')
 
-            dpg.add_button('Добавить',callback=lambda a,b:add_camera(a,b))
+            dpg.add_button(label='Добавить',callback=lambda a,b:add_camera(a,b))
     else:
         with dpg.window(width=300, height=300):
             number_camera=cameras.index(data)
@@ -78,7 +78,7 @@ def doors_callback(sender, data):
             dpg.add_input_text(hint='Введите ip')
             dpg.add_input_text(hint='Введите порт')
 
-            dpg.add_button('Добавить', callback=lambda a, b: add_door(a, b))
+            dpg.add_button(label='Добавить', callback=lambda a, b: add_door(a, b))
 
     else:
         with dpg.window(width=300, height=300):
@@ -89,9 +89,22 @@ def doors_callback(sender, data):
             dpg.add_text('ip: ' + s.split('\n')[2])
             dpg.add_text('Порт: ' + s.split('\n')[3])
 def sensors_callback(sender, data):
-    if data=='+':
+    if data == '+':
         with dpg.window(width=300, height=300):
-            pass
+            def add_door(a, b):
+                id = a
+                name = dpg.get_value(id - 4)
+                locate = dpg.get_value(id - 3)
+                ip = dpg.get_value(id - 2)
+                port = dpg.get_value(id - 1)
+                response(HOST, PORT, bytes(f'add_camera\n{ip}\n{locate}\n{name}\n{port}', 'utf8'))
+
+            dpg.add_input_text(hint='Введите название')
+            dpg.add_input_text(hint='Введите расположение')
+            dpg.add_input_text(hint='Введите ip')
+            dpg.add_input_text(hint='Введите порт')
+
+            dpg.add_button(label='Добавить', callback=lambda a, b: add_door(a, b))
 
     else:
         with dpg.window(width=300, height=300):
