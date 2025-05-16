@@ -31,7 +31,7 @@ with dpg.font_registry():
     with dpg.font("Domino Italic.otf", text_size + 10) as big_font_domino:
         dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
 dpg.bind_font(font_domino)
-
+#31231
 def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
