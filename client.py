@@ -40,20 +40,29 @@ def upgate(a):
 def cameras_callback(sender, data):
     with dpg.window(width=300, height=300):
         number_camera=cameras.index(data)
-        s = response(HOST, PORT, bytes(f'get_camera {number_camera}', 'utf8')).decode('utf-8')
-        dpg.add_text(s)
+        s = response(HOST, PORT, bytes(f'get_camera\n{number_camera}', 'utf8')).decode('utf-8')
+        dpg.add_text('Название: ' + s.split('\n')[0])
+        dpg.add_text('Расположение: ' + s.split('\n')[1])
+        dpg.add_text('ip: ' + s.split('\n')[2])
+        dpg.add_text('Порт: ' + s.split('\n')[3])
         id_w = dpg.last_item()
 def doors_callback(sender, data):
     with dpg.window(width=300, height=300):
         number_door=doors.index(data)
-        s = response(HOST, PORT, bytes(f'get_door {number_door}', 'utf8')).decode('utf-8')
-        dpg.add_text(s)
+        s = response(HOST, PORT, bytes(f'get_door\n{number_door}', 'utf8')).decode('utf-8')
+        dpg.add_text('Название: '+s.split('\n')[0])
+        dpg.add_text('Расположение: '+s.split('\n')[1])
+        dpg.add_text('ip: ' + s.split('\n')[2])
+        dpg.add_text('Порт: ' + s.split('\n')[3])
         id_w = dpg.last_item()
 def sensors_callback(sender, data):
     with dpg.window(width=300, height=300):
         number_sensor=sensors.index(data)
-        s=response(HOST, PORT, bytes(f'get_sensor {number_sensor}','utf8')).decode('utf-8')
-        dpg.add_text(s)
+        s=response(HOST, PORT, bytes(f'get_sensor\n{number_sensor}','utf8')).decode('utf-8')
+        dpg.add_text('Название: ' + s.split('\n')[0])
+        dpg.add_text('Расположение: ' + s.split('\n')[1])
+        dpg.add_text('ip: ' + s.split('\n')[2])
+        dpg.add_text('Порт: ' + s.split('\n')[3])
         id_w = dpg.last_item()
 
 
