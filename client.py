@@ -27,8 +27,8 @@ def upgate(a):
 
 with dpg.window(label="Example Window"):
     dpg.add_text("Hello, world")
-    a = dpg.last_item()
-    dpg.add_button(label="Get_data", callback=lambda m, s:upgate(a) )
+    id_e = dpg.last_item()
+    dpg.add_button(label="Get_data", callback=lambda m, s:upgate(id_e) )
     dpg.add_input_text(label="string", default_value="Quick brown fox")
     dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
