@@ -70,6 +70,9 @@ cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split("\n")
 doors = response(HOST, PORT, b"get_doors").decode("utf-8").split("\n")
 sensors = response(HOST, PORT, b"get_sensors").decode("utf-8").split("\n")
 
+cameras.append('+')
+doors.append('+')
+sensors.append('+')
 print(cameras)
 with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(screeninfo.get_monitors()[0].height), no_title_bar=True, pos=(0, 0), no_move=True, no_resize=True, tag="Window", no_collapse= True, no_bring_to_front_on_focus=True):
     with dpg.group(horizontal=True):
@@ -80,9 +83,9 @@ with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(scr
     dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
     with dpg.group(horizontal=True):
-        dpg.add_listbox(cameras,num_items=15,width=400,label="Tabs",callback=lambda m, s:cameras_callback(m,s))
-        dpg.add_listbox(doors, num_items=15,width=400, label="Tabs",callback=lambda m, s:doors_callback(m,s))
-        dpg.add_listbox(sensors, num_items=15,width=400, label="Tabs",callback=lambda m, s:sensors_callback(m,s))
+        dpg.add_listbox(cameras,num_items=15,width=400,callback=lambda m, s:cameras_callback(m,s))
+        dpg.add_listbox(doors, num_items=15,width=400,callback=lambda m, s:doors_callback(m,s))
+        dpg.add_listbox(sensors, num_items=15,width=400,callback=lambda m, s:sensors_callback(m,s))
 
 dpg.setup_dearpygui()
 dpg.show_viewport()
