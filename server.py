@@ -31,7 +31,7 @@ doors.append(dor)
 
 sensors = []
 for i in range(10):
-    sensors.append(sensor(f"Sensor no {i}", '', '', '', ''))
+    sensors.append(sensor(f"Sensor no {i}", '', '', ''))
 
 
 
@@ -47,6 +47,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                 data = conn.recv(1024)
                 st = data.decode('utf-8')
+                spl = st.split('\n')
                 if not data:
                     break
 
@@ -69,22 +70,35 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         res += i.name + "\n"
 
                     conn.sendall(bytes(res, "utf-8"))
-                elif st.split()[0] == 'get_camera':
+                elif spl[0] == 'get_camera':
                     num = int(st.split()[1])
                     cam = cameras[num]
                     res = f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}"
                     print(res)
                     conn.sendall(bytes(res, "utf-8"))
-                elif st.split()[0] == "get_door":
+                elif spl[0] == "get_door":
                     num = int(st.split()[1])
                     dor = doors[num]
                     res = (f"{dor.name}\n{dor.location}\n{dor.ip}\n{dor.port}\n{dor.level}")
                     conn.sendall(bytes(res, "utf-8"))
-                elif st.split()[0] == "get_sensor":
+                elif spl[0] == "get_sensor":
                     num = int(st.split()[1])
                     sen = sensors[num]
                     res = (f"{sen.name}\n{sen.location}\n{sen.ip}\n{sen.port}")
                     conn.sendall(bytes(res, "utf-8"))
+                elif spl[0] == "add_camera":
+                    cam = camera(spl[1], spl[2], spl[3], spl[4])
+                    cameras.append(cam)
+                    conn.sendall(b'ok')
+                elif spl[0] == "add_door":
+                    door = door(spl[1], spl[2], spl[3], spl[4], spl[5], spl[6])
+                    doors.append(door)
+                    conn.sendall(b'ok')
+                elif spl[0] == "add_sensor":
+                    sen = sensor(spl[1], spl[2], spl[3], spl[4])
+                    cameras.append(cam)
+                    conn.sendall(b'ok')
+
                 else:
 
                     conn.sendall(b"Error")
