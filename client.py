@@ -69,6 +69,7 @@ def sensors_callback(sender, data):
 cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split("\n")
 doors = response(HOST, PORT, b"get_doors").decode("utf-8").split("\n")
 sensors = response(HOST, PORT, b"get_sensors").decode("utf-8").split("\n")
+
 print(cameras)
 with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(screeninfo.get_monitors()[0].height), no_title_bar=True, pos=(0, 0), no_move=True, no_resize=True, tag="Window", no_collapse= True, no_bring_to_front_on_focus=True):
     with dpg.group(horizontal=True):
