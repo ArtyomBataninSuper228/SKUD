@@ -1,6 +1,8 @@
 import socket
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
+import datetime
+from SKUD import *
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -14,7 +16,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 data = conn.recv(1024)
                 if not data:
                     break
-                st= str(data, "utf-8")
-                a, b = map(int, st.split())
-                conn.sendall(bytes(f"{a+b}", "utf-8"))
+                elif str(data) == "get_time":
+                    conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
                 continue
+

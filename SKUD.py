@@ -1,6 +1,8 @@
 from PTZ import *
 import socket
 import logging
+
+
 class camera:
     def __init__(self, ip, location, name, port):
         self.ip = ip
@@ -27,5 +29,6 @@ class door:
             s.sendall(b"Open the door")
             resp = s.recv(1024)
             return resp
+
 
 
