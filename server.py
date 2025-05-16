@@ -31,7 +31,7 @@ doors.append(dor)
 
 sensors = []
 for i in range(10):
-    sensors.append(sensor(f"Sensor no {i}", '', '', ''))
+    sensors.append(sensor(f"Sensor no {i}", 'тут', '', ''))
 
 
 
