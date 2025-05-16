@@ -1,6 +1,7 @@
 # echo-client.py
 import dearpygui.dearpygui as dpg
 import socket
+import screeninfo
 
 def response(host,port,data):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -18,7 +19,7 @@ PORT = 65432  # The port used by the server
 
 
 dpg.create_context()
-dpg.create_viewport(title='Client', width=600, height=300)
+dpg.create_viewport(x_pos=0,y_pos=0,title='Client',width = int(screeninfo.get_monitors()[0].width),height = int(screeninfo.get_monitors()[0].height))
 
 
 text_size = 20
@@ -34,15 +35,14 @@ dpg.bind_font(font_domino)
 def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
-
-cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split()
-
-with dpg.window(label="Example Window"):
+#cameras = response(HOST, PORT, "get_cameras").decode("@utf-8").split()
+with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(screeninfo.get_monitors()[0].height), no_title_bar=True, pos=(0, 0), no_move=True, no_resize=True, tag="Window", no_collapse= True, no_bring_to_front_on_focus=True):
     dpg.add_text("Hello, world")
     id_e = dpg.last_item()
     dpg.add_button(label="Get_data", callback=lambda m, s:upgate(id_e) )
     dpg.add_input_text(label="string", default_value="Quick brown fox")
     dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
+    dpg.add_listbox([1,2,3,4,5],num_items=15,label="Tabs")
 
 dpg.setup_dearpygui()
 dpg.show_viewport()
