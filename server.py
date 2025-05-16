@@ -68,8 +68,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     res = ''
                     for i in sensors:
                         res += i.name + "\n"
-
                     conn.sendall(bytes(res, "utf-8"))
+
+
+
                 elif spl[0] == 'get_camera':
                     num = int(st.split()[1])
                     cam = cameras[num]
@@ -86,6 +88,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     sen = sensors[num]
                     res = (f"{sen.name}\n{sen.location}\n{sen.ip}\n{sen.port}")
                     conn.sendall(bytes(res, "utf-8"))
+
+
+
                 elif spl[0] == "add_camera":
                     cam = camera(spl[1], spl[2], spl[3], spl[4])
                     cameras.append(cam)
@@ -93,6 +98,23 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif spl[0] == "add_door":
                     door = door(spl[1], spl[2], spl[3], spl[4], spl[5], spl[6])
                     doors.append(door)
+                    conn.sendall(b'ok')
+                elif spl[0] == "add_sensor":
+                    sen = sensor(spl[1], spl[2], spl[3], spl[4])
+                    cameras.append(cam)
+                    conn.sendall(b'ok')
+
+
+
+                elif spl[0] == "_camera":
+                    cam = camera(spl[1], spl[2], spl[3], spl[4])
+
+                    cameras.append(cam)
+                    conn.sendall(b'ok')
+                elif spl[0] == "add_door":
+                    dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
+                    door()
+                    doors.append(dor)
                     conn.sendall(b'ok')
                 elif spl[0] == "add_sensor":
                     sen = sensor(spl[1], spl[2], spl[3], spl[4])
