@@ -43,6 +43,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         with conn:
             print(f"Connected by {addr}")
             print(conn)
+            st = data.decode('utf-8')
             while True:
                 data = conn.recv(1024)
                 if not data:
@@ -66,6 +67,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     for i in sensors:
                         res += i.name + "\n"
                     print(res)
+                    conn.sendall(bytes(res, "utf-8"))
+                elif st.split()[0] == "get_cameras":
+                    num = int(st.split()[1])
+                    cam = cameras[num]
+                    res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
+                    conn.sendall(bytes(res, "utf-8"))
+                elif st.split()[0] == "get_doors":
+                    num = int(st.split()[1])
+                    cam = doors[num]
+                    res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
+                    conn.sendall(bytes(res, "utf-8"))
+                elif st.split()[0] == "get_sensors":
+                    num = int(st.split()[1])
+                    cam = sensors[num]
+                    res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
                     conn.sendall(bytes(res, "utf-8"))
                 else:
 
