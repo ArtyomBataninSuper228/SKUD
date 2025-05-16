@@ -77,13 +77,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     conn.sendall(bytes(res, "utf-8"))
                 elif st.split()[0] == "get_door":
                     num = int(st.split()[1])
-                    cam = doors[num]
-                    res = (f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}")
+                    dor = doors[num]
+                    res = (f"{dor.name}\n{dor.location}\n{dor.ip}\n{dor.port}")
                     conn.sendall(bytes(res, "utf-8"))
                 elif st.split()[0] == "get_sensor":
                     num = int(st.split()[1])
-                    cam = sensors[num]
-                    res = (f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}")
+                    sen = sensors[num]
+                    res = (f"{sen.name}\n{sen.location}\n{sen.ip}\n{sen.port}")
                     conn.sendall(bytes(res, "utf-8"))
                 else:
 
