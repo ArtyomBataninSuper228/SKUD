@@ -34,7 +34,8 @@ dpg.bind_font(font_domino)
 def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
-cameras = response(HOST, PORT, "get_cameras").decode("utf-8").split()
+
+cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split()
 
 with dpg.window(label="Example Window"):
     dpg.add_text("Hello, world")

@@ -4,6 +4,9 @@ PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 import datetime
 from SKUD import *
 
+
+cameras = ""
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     while 1:
