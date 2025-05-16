@@ -6,26 +6,26 @@ from SKUD import *
 
 
 cameras = []
-cam1 = camera("","","Входная","")
+cam1 = camera("192","У входа","Входная","55")
 cameras.append(cam1)
-cam1 = camera("","","Выходная","")
+cam1 = camera("192","У входа","Выходная","55")
 cameras.append(cam1)
-cam1 = camera("","","Внутренняя","")
+cam1 = camera("192","У входа","Внутренняя","55")
 cameras.append(cam1)
-cam1 = camera("","","Внутривенная","")
+cam1 = camera("192","У входа","Внутривенная","55")
 cameras.append(cam1)
 
 
 doors = []
-dor = door("Вход", "", "", "", "", "")
+dor = door("Вход", "У входа", "", "192", "", "55")
 doors.append(dor)
-dor = door("Выход", "", "", "", "", "")
-doors.append(dor)
-
-dor = door("Служебная", "", "", "", "", "")
+dor = door("Выход", "У входа", "", "192", "", "55")
 doors.append(dor)
 
-dor = door("Туалет", "", "", "", "", "")
+dor = door("Служебная", "У входа", "", "192", "", "55")
+doors.append(dor)
+
+dor = door("Туалет", "У входа", "", "192", "", "55")
 doors.append(dor)
 
 
@@ -42,46 +42,48 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         conn, addr = s.accept()
         with conn:
             print(f"Connected by {addr}")
-            print(conn)
-            st = data.decode('utf-8')
+
             while True:
+
                 data = conn.recv(1024)
+                st = data.decode('utf-8')
                 if not data:
                     break
+
                 elif data == b"get_time":
                     conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
                 elif data == b"get_cameras":
                     res = ''
                     for i in cameras:
                         res += i.name + "\n"
-                    print(res)
                     conn.sendall(bytes(res, "utf-8"))
                 elif data == b"get_doors":
                     res = ''
                     for i in  doors:
                         res += i.name + "\n"
-                    print(res)
+
                     conn.sendall(bytes(res, "utf-8"))
                 elif data == b"get_sensors":
                     res = ''
                     for i in sensors:
                         res += i.name + "\n"
-                    print(res)
+
                     conn.sendall(bytes(res, "utf-8"))
-                elif st.split()[0] == "get_cameras":
+                elif st.split()[0] == 'get_camera':
                     num = int(st.split()[1])
                     cam = cameras[num]
-                    res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
+                    res = f"{cam.name} {cam.location} {cam.ip}{cam.port}"
+                    print(res)
                     conn.sendall(bytes(res, "utf-8"))
-                elif st.split()[0] == "get_doors":
+                elif st.split()[0] == "get_door":
                     num = int(st.split()[1])
                     cam = doors[num]
                     res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
                     conn.sendall(bytes(res, "utf-8"))
-                elif st.split()[0] == "get_sensors":
+                elif st.split()[0] == "get_sensor":
                     num = int(st.split()[1])
                     cam = sensors[num]
-                    res = (f"{cam.name} {cam.location} {cam.ip}{cam.port}")
+                    res = (f"{cam.name}{cam.location} {cam.ip} {cam.port}")
                     conn.sendall(bytes(res, "utf-8"))
                 else:
 
