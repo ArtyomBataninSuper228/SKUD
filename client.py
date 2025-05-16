@@ -38,6 +38,7 @@ def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
 cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split()
+print(cameras)
 with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(screeninfo.get_monitors()[0].height), no_title_bar=True, pos=(0, 0), no_move=True, no_resize=True, tag="Window", no_collapse= True, no_bring_to_front_on_focus=True):
     dpg.add_text("Hello, world")
     id_e = dpg.last_item()

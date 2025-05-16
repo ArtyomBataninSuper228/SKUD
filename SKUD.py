@@ -9,7 +9,7 @@ class camera:
         self.location = location
         self.name = name
         self.port = port
-        self.ptz_sys = PTZ(self.port)
+        #self.ptz_sys = PTZ(self.port)
 
     def start_detecting(self):
         pass

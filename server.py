@@ -6,6 +6,14 @@ from SKUD import *
 
 
 cameras = []
+cam1 = camera("","","Входная","")
+cameras.append(cam1)
+cam1 = camera("","","Выходная","")
+cameras.append(cam1)
+cam1 = camera("","","Внутренняя","")
+cameras.append(cam1)
+cam1 = camera("","","Внутривенная","")
+cameras.append(cam1)
 doors = []
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -22,7 +30,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     break
                 elif data == b"get_time":
                     conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
+                elif data == b"get_cameras":
+                    res = ''
+                    for i in cameras:
+                        res += i.name + " "
+                    print(res)
+                    conn.sendall(bytes(res, "utf-8"))
                 else:
+
                     conn.sendall(b"Error")
                 continue
 
