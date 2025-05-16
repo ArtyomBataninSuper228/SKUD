@@ -27,13 +27,12 @@ dpg.create_viewport(x_pos=0,y_pos=0,title='Client',width = int(screeninfo.get_mo
 text_size = 20
 
 with dpg.font_registry():
-
     with dpg.font("Domino Italic.otf", text_size) as font_domino:
         dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
     with dpg.font("Domino Italic.otf", text_size + 10) as big_font_domino:
         dpg.add_font_range_hint(dpg.mvFontRangeHint_Cyrillic)
 dpg.bind_font(font_domino)
-#312313
+
 def upgate(a):
     tm = str(response(HOST, PORT, b"get_time"))
     dpg.set_value(a, tm)
@@ -72,7 +71,7 @@ with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(scr
         dpg.add_button(label="Get_data", callback=lambda m, s:upgate(id_e) )
     dpg.add_input_text(label="string", default_value="Quick brown fox")
     dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
-    #1
+
     with dpg.group(horizontal=True):
         dpg.add_listbox(cameras,num_items=15,width=400,label="Tabs",callback=lambda m, s:cameras_callback(m,s))
         dpg.add_listbox(doors, num_items=15,width=400, label="Tabs",callback=lambda m, s:doors_callback(m,s))
