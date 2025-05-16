@@ -96,7 +96,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     cameras.append(cam)
                     conn.sendall(b'ok')
                 elif spl[0] == "add_door":
-                    door = door(spl[1], spl[2], spl[3], spl[4], spl[5], spl[6])
+                    door = door(spl[1], spl[2], spl[3], spl[4], spl[5])
                     doors.append(door)
                     conn.sendall(b'ok')
                 elif spl[0] == "add_sensor":
