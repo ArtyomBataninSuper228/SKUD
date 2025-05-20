@@ -101,23 +101,25 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     conn.sendall(b'ok')
                 elif spl[0] == "add_sensor":
                     sen = sensor(spl[1], spl[2], spl[3], spl[4])
-                    cameras.append(cam)
+                    sen.append(sen)
                     conn.sendall(b'ok')
 
 
 
                 elif spl[0] == "update_camera":
                     cam = camera(spl[1], spl[2], spl[3], spl[4])
-                    cameras.append(cam)
+                    num = int(spl[5])
+                    cameras[num]=cam
                     conn.sendall(b'ok')
                 elif spl[0] == "update_door":
                     dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
-                    door()
-                    doors.append(dor)
+                    num = int(spl[6])
+                    doors[num]=dor
                     conn.sendall(b'ok')
                 elif spl[0] == "update_sensor":
                     sen = sensor(spl[1], spl[2], spl[3], spl[4])
-                    cameras.append(cam)
+                    num = int(spl[5])
+                    sensors[num]= sen
                     conn.sendall(b'ok')
 
                 else:
