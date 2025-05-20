@@ -35,6 +35,7 @@ for i in range(10):
 
 
 
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     while 1:
