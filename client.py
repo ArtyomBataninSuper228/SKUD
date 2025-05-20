@@ -198,7 +198,7 @@ def doors_callback(sender, data):
                 level = dpg.get_value(start_tag + 15)
                 print(name, locate, ip, level, port)
                 response(HOST,PORT,bytes(f'update_door\n{name}\n{locate}\n{ip}\n{level}\n{port}\n{number_door}','utf8'))
-            dpg.add_button(label='Сохранить',callback=update_door())
+            dpg.add_button(label='Сохранить',callback=update_door)
 def sensors_callback(sender, data):
     if data == '+':
         with dpg.window(width=300, height=300):
