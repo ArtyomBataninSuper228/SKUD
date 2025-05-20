@@ -135,6 +135,16 @@ def cameras_callback(sender, data):
             with dpg.group(horizontal=True):
                 dpg.add_text('Порт: ')
                 dpg.add_input_text(default_value=s.split('\n')[3])
+            def update_camera():
+                name = dpg.get_value(start_tag+3)
+                locate = dpg.get_value(start_tag + 6)
+                ip = dpg.get_value(start_tag + 9)
+                port = dpg.get_value(start_tag + 12)
+                print(ip,locate,name,port,number_camera)
+                response(HOST,PORT,bytes(f'update_camera\n{ip}\n{locate}\n{name}\n{port}\n{number_camera}','utf8'))
+            dpg.add_button(label='Сохранить',callback=update_camera)
+
+
 
 def doors_callback(sender, data):
     if data == '+':
