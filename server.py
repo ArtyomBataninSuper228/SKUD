@@ -76,7 +76,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     num = int(st.split()[1])
                     cam = cameras[num]
                     res = f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}"
-                    print(res)
                     conn.sendall(bytes(res, "utf-8"))
                 elif spl[0] == "get_door":
                     num = int(st.split()[1])
