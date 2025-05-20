@@ -4,6 +4,7 @@ PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 import datetime
 from SKUD import *
 import os
+import pickle
 
 
 
@@ -45,11 +46,9 @@ def open_cams():
     pass
 
 def save_cams():
-    f = open(path("cams.txt"), mode = "w")
-    res = ""
-    for cam in cams:
-        pass
-    
+    f = open(path("cams.data"), mode = "wb")
+    pickle.dump(cams, f)
+save_cams()
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
