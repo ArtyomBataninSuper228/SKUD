@@ -46,7 +46,7 @@ def read_settings():
             m = i.split("=")
             settings[m[0]] = m[1][:-1]
         except:
-            warn(f"Не удаётся прочитать строку {i}. Строка будет проигнорирована")
+            warning(f"Can't read a line {i}. This line will be ignored")
     file_settings.close()
 
 def save_settings():
@@ -217,7 +217,7 @@ def updating_units():
 
 
 def open_settings():
-    with dpg.window():
+    with dpg.window(label="Настройки", width=300):
         start_tag = dpg.last_item()
         red = 255
         green = 255
