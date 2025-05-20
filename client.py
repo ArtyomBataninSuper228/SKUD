@@ -251,6 +251,7 @@ cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split("\n")
 doors = response(HOST, PORT, b"get_doors").decode("utf-8").split("\n")
 sensors = response(HOST, PORT, b"get_sensors").decode("utf-8").split("\n")
 
+#1
 cameras.pop(-1)
 doors.pop(-1)
 sensors.pop(-1)
