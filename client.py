@@ -154,6 +154,7 @@ def doors_callback(sender, data):
             dpg.add_text('Расположение: '+s.split('\n')[1])
             dpg.add_text('ip: ' + s.split('\n')[2])
             dpg.add_text('Порт: ' + s.split('\n')[3])
+            dpg.add_text('Уровень: ' + s.split('\n')[4])
 def sensors_callback(sender, data):
     if data == '+':
         with dpg.window(width=300, height=300):
