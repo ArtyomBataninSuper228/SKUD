@@ -121,10 +121,21 @@ def cameras_callback(sender, data):
         with dpg.window(width=300, height=300):
             number_camera=cameras.index(data)
             s = response(HOST, PORT, bytes(f'get_camera\n{number_camera}', 'utf8')).decode('utf-8')
-            dpg.add_text('Название: ' + s.split('\n')[0])
-            dpg.add_text('Расположение: ' + s.split('\n')[1])
-            dpg.add_text('ip: ' + s.split('\n')[2])
-            dpg.add_text('Порт: ' + s.split('\n')[3])
+
+            start_tag=dpg.last_item()
+            with dpg.group(horizontal=True):
+                dpg.add_text('Название: ')
+                dpg.add_input_text(default_value=s.split('\n')[0])
+            with dpg.group(horizontal=True):
+                dpg.add_text('Расположение: ')
+                dpg.add_input_text(default_value=s.split('\n')[1])
+            with dpg.group(horizontal=True):
+                dpg.add_text('ip: ')
+                dpg.add_input_text(default_value=s.split('\n')[2])
+            with dpg.group(horizontal=True):
+                dpg.add_text('Порт: ')
+                dpg.add_input_text(default_value=s.split('\n')[3])
+
 def doors_callback(sender, data):
     if data == '+':
         with dpg.window(width=300, height=300):
