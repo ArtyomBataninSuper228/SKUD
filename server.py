@@ -45,6 +45,9 @@ for i in range(10):
 def open_cams():
     pass
 
+
+
+
 def save_cams():
     f = open(path("cams.data"), mode = "wb")
     pickle.dump(cams, f)
