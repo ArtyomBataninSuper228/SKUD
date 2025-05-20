@@ -254,6 +254,10 @@ with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(scr
         dpg.add_listbox(doors, num_items=15,width=400,callback=lambda m, s:doors_callback(m,s), tag = "doors")
         dpg.add_listbox(sensors, num_items=15,width=400,callback=lambda m, s:sensors_callback(m,s), tag = "sensors")
 
+
+
+
+
 dpg.setup_dearpygui()
 dpg.show_viewport()
 t1 = Thread(target=updating_units)
