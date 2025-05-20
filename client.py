@@ -135,7 +135,7 @@ def doors_callback(sender, data):
                 level = dpg.get_value(id - 3)
                 ip = dpg.get_value(id - 2)
                 port = dpg.get_value(id - 1)
-                response(HOST, PORT, bytes(f'add_door\n{ip}\n{locate}\n{level}\n{name}\n{port}', 'utf8'))
+                response(HOST, PORT, bytes(f'add_door\n{name}\n{locate}\n{ip}\n{level}\n{port}', 'utf8'))
 
 
             dpg.add_input_text(hint='Введите название')
