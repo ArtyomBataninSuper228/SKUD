@@ -35,6 +35,11 @@ for i in range(10):
     sensors.append(sensor(f"Sensor no {i}", 'тут', '', ''))
 
 
+def open_cams():
+    pass
+
+def save_cams():
+    pass
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -113,6 +118,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     conn.sendall(b'ok')
                 elif spl[0] == "update_door":
                     dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
+                    print(spl[1], spl[2], spl[3], spl[4], spl[5])
                     num = int(spl[6])
                     doors[num]=dor
                     conn.sendall(b'ok')
