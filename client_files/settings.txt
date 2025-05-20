@@ -1,5 +1,5 @@
 textsz=40
-host=127.0.0.1
-port=65432
+host=46.45.15.136
+port=1032
 user=user
 password=password
