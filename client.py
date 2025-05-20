@@ -94,6 +94,12 @@ with dpg.font_registry():
 dpg.bind_font(font_domino)
 
 
+### Загрузка изобраэений
+
+width, height, channels, data = dpg.load_image(path("file.jpeg"))
+
+with dpg.texture_registry(show=True):
+    dpg.add_static_texture(width=width, height=height, default_value=data, tag="texture_tag")
 
 
 
@@ -315,6 +321,8 @@ with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(scr
         dpg.add_listbox(cameras,num_items=15,width=400,callback=lambda m, s:cameras_callback(m,s), tag = "cameras")
         dpg.add_listbox(doors, num_items=15,width=400,callback=lambda m, s:doors_callback(m,s), tag = "doors")
         dpg.add_listbox(sensors, num_items=15,width=400,callback=lambda m, s:sensors_callback(m,s), tag = "sensors")
+    with dpg.window(label="Image"):
+        dpg.add_image("texture_tag")
 
 
 
