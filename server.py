@@ -3,7 +3,7 @@ HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 import datetime
 from SKUD import *
-from flask import send_file
+
 
 
 cameras = []
@@ -106,17 +106,16 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
 
 
-                elif spl[0] == "_camera":
+                elif spl[0] == "update_camera":
                     cam = camera(spl[1], spl[2], spl[3], spl[4])
-
                     cameras.append(cam)
                     conn.sendall(b'ok')
-                elif spl[0] == "add_door":
+                elif spl[0] == "update_door":
                     dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
                     door()
                     doors.append(dor)
                     conn.sendall(b'ok')
-                elif spl[0] == "add_sensor":
+                elif spl[0] == "update_sensor":
                     sen = sensor(spl[1], spl[2], spl[3], spl[4])
                     cameras.append(cam)
                     conn.sendall(b'ok')
