@@ -1,4 +1,8 @@
 import socket
+import time
+
+
+
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 import datetime
@@ -12,46 +16,63 @@ file_path = os.path.dirname(os.path.abspath(__file__))
 def path(p):
     return os.path.join(file_path, "server_files",  p)
 
-
-cams = []
-cam1 = camera("192","У входа","Входная","55")
-cams.append(cam1)
-cam1 = camera("192","У входа","Выходная","55")
-cams.append(cam1)
-cam1 = camera("192","У входа","Внутренняя","55")
-cams.append(cam1)
-cam1 = camera("192","У входа","Внутривенная","55")
-cams.append(cam1)
-
+is_run = True
 
 doors = []
-dor = door("Вход", "У входа", "192", "", "55")
-doors.append(dor)
-dor = door("Выход", "У входа", "192", "", "55")
-doors.append(dor)
-
-dor = door("Служебная", "У входа", "192", "", "55")
-doors.append(dor)
-
-dor = door("Туалет", "У входа", "192", "", "55")
-doors.append(dor)
-
-
 sensors = []
-for i in range(10):
-    sensors.append(sensor(f"Sensor no {i}", 'тут', '', ''))
+cams = []
+
+
 
 
 def open_cams():
-    pass
+    global cams
+    f = open(path("cams.data"), mode="rb")
+    cams = pickle.load( f)
+
+def open_doors():
+    global doors
+    f = open(path("doors.data"), mode="rb")
+    doors = pickle.load( f)
+
+def open_sensors():
+    global sensors
+    f = open(path("sensors.data"), mode="rb")
+    sensors = pickle.load( f)
+
+open_cams()
+open_sensors()
+open_doors()
 
 
 
 
 def save_cams():
     f = open(path("cams.data"), mode = "wb")
-    pickle.dump(cams, f)
-save_cams()
+    pickle.dump(cams,f)
+
+
+def save_doors():
+    f = open(path("doors.data"), mode = "wb")
+    pickle.dump(doors,f)
+
+
+def save_sensors():
+    f = open(path("sensors.data"), mode = "wb")
+    pickle.dump(sensors,f)
+
+
+
+def saving():
+    while is_run:
+        save_cams()
+        save_doors()
+        save_sensors()
+        time.sleep(1)
+
+t = Thread(target=saving)
+t.start()
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -111,6 +132,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif spl[0] == "add_camera":
                     cam = camera(spl[1], spl[2], spl[3], spl[4])
                     cams.append(cam)
+                    print(spl[1], spl[2], spl[3], spl[4])
                     conn.sendall(b'ok')
                 elif spl[0] == "add_door":
                     dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])

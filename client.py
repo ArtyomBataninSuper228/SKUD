@@ -253,10 +253,9 @@ def sensors_callback(sender, data):
             dpg.add_button(label='Сохранить',callback=update_sensor)
 
 
-cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split("\n")
+cameras = response(HOST, PORT, b"get_cams").decode("utf-8").split("\n")
 doors = response(HOST, PORT, b"get_doors").decode("utf-8").split("\n")
 sensors = response(HOST, PORT, b"get_sensors").decode("utf-8").split("\n")
-
 #1
 cameras.pop(-1)
 doors.pop(-1)
@@ -268,7 +267,7 @@ sensors.append('+')
 def updating_units():
     global cameras, doors, sensors
     while is_run:
-        cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split("\n")
+        cameras = response(HOST, PORT, b"get_cams").decode("utf-8").split("\n")
         doors = response(HOST, PORT, b"get_doors").decode("utf-8").split("\n")
         sensors = response(HOST, PORT, b"get_sensors").decode("utf-8").split("\n")
         cameras.pop(-1)
@@ -321,22 +320,31 @@ with dpg.window(width = int(screeninfo.get_monitors()[0].width),height = int(scr
         dpg.add_listbox(cameras,num_items=15,width=400,callback=lambda m, s:cameras_callback(m,s), tag = "cameras")
         dpg.add_listbox(doors, num_items=15,width=400,callback=lambda m, s:doors_callback(m,s), tag = "doors")
         dpg.add_listbox(sensors, num_items=15,width=400,callback=lambda m, s:sensors_callback(m,s), tag = "sensors")
-    with dpg.window(label="Image"):
-        dpg.add_image("texture_tag")
 
 with dpg.theme() as global_theme:
 
     with dpg.theme_component(dpg.mvAll):
-        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (255, 140, 23), category=dpg.mvThemeCat_Core)
+        #dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (0, 0, 0), category=dpg.mvThemeCat_Core)
         dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 5, category=dpg.mvThemeCat_Core)
-
-    with dpg.theme_component(dpg.mvInputInt):
-        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (140, 255, 23), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (50,50,50, 230), category=dpg.mvThemeCat_Core)
+    with dpg.theme_component(dpg.mvListbox):
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (0, 0, 0), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 5, category=dpg.mvThemeCat_Core)
+    with dpg.theme_component(dpg.mvInputText):
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (0, 0, 0), category=dpg.mvThemeCat_Core)
         dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 5, category=dpg.mvThemeCat_Core)
 
 dpg.bind_theme(global_theme)
 
-dpg.show_style_editor()
+
+with dpg.theme() as wind_theme:
+
+    with dpg.theme_component(dpg.mvAll):
+        #dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (0, 0, 0), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 5, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (50,50,50), category=dpg.mvThemeCat_Core)
+dpg.bind_item_theme("Window", wind_theme)
+
 
 
 
