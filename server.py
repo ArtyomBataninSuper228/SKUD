@@ -3,18 +3,24 @@ HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 import datetime
 from SKUD import *
+import os
 
 
 
-cameras = []
+file_path = os.path.dirname(os.path.abspath(__file__))
+def path(p):
+    return os.path.join(file_path, "server_files",  p)
+
+
+cams = []
 cam1 = camera("192","У входа","Входная","55")
-cameras.append(cam1)
+cams.append(cam1)
 cam1 = camera("192","У входа","Выходная","55")
-cameras.append(cam1)
+cams.append(cam1)
 cam1 = camera("192","У входа","Внутренняя","55")
-cameras.append(cam1)
+cams.append(cam1)
 cam1 = camera("192","У входа","Внутривенная","55")
-cameras.append(cam1)
+cams.append(cam1)
 
 
 doors = []
@@ -39,7 +45,11 @@ def open_cams():
     pass
 
 def save_cams():
-    pass
+    f = open(path("cams.txt"), mode = "w")
+    res = ""
+    for cam in cams:
+        pass
+    
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -59,9 +69,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                 elif data == b"get_time":
                     conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
-                elif data == b"get_cameras":
+                elif data == b"get_cams":
                     res = ''
-                    for i in cameras:
+                    for i in cams:
                         res += i.name + "\n"
                     conn.sendall(bytes(res, "utf-8"))
                 elif data == b"get_doors":
@@ -80,7 +90,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                 elif spl[0] == 'get_camera':
                     num = int(st.split()[1])
-                    cam = cameras[num]
+                    cam = cams[num]
                     res = f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}"
                     conn.sendall(bytes(res, "utf-8"))
                 elif spl[0] == "get_door":
@@ -98,7 +108,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
                 elif spl[0] == "add_camera":
                     cam = camera(spl[1], spl[2], spl[3], spl[4])
-                    cameras.append(cam)
+                    cams.append(cam)
                     conn.sendall(b'ok')
                 elif spl[0] == "add_door":
                     dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
@@ -114,7 +124,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif spl[0] == "update_camera":
                     cam = camera(spl[1], spl[2], spl[3], spl[4])
                     num = int(spl[5])
-                    cameras[num]=cam
+                    cams[num]=cam
                     conn.sendall(b'ok')
                 elif spl[0] == "update_door":
                     dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
