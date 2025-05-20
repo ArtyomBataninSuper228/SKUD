@@ -8,6 +8,10 @@ from pandas.core.dtypes.inference import is_re
 from pygame.examples.midi import null_key
 from threading import Thread
 import os
+from logging import *
+
+
+
 
 
 
@@ -23,15 +27,10 @@ def path(p):
     return os.path.join(file_path, "client_files",  p)
 
 
-def response(host,port,data):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((host, port))
-        s.sendall(data)
-        resp = s.recv(1024)
-        return resp
 
 
 
+basicConfig(level=INFO, filename=path("Latest_log.txt"),filemode="w")
 
 ### Нормальные настройки, все необходимые параметры добавляй в файл
 settings = {}
@@ -40,19 +39,22 @@ def read_settings():
     try:
         file_settings = open(path("settings.txt"), mode='r')
     except FileNotFoundError:
+        critical(f"Файл с настройками не найден по адресу {path("settings.txt")}")
         raise f"Файл с настройками не найден по адресу {path("settings.txt")}"
     for i in file_settings.readlines():
         try:
             m = i.split("=")
             settings[m[0]] = m[1][:-1]
         except:
-            print(f"Не удаётся прочитать строку {i}. Строка будет проигнорирована")
+            warn(f"Не удаётся прочитать строку {i}. Строка будет проигнорирована")
     file_settings.close()
+
 def save_settings():
     global settings
     try:
         file_settings = open(path("settings.txt"), mode='w')
     except:
+        critical("Не удалось создать файл с настройками")
         raise "Не удалось создать файл с настройками"
     res = ""
     for key in settings.keys():
@@ -68,7 +70,12 @@ HOST = settings["host"]  # The server's hostname or IP address
 PORT = int(settings["port"])  # The port used by the server
 
 
-
+def response(host,port,data):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, port))
+        s.sendall(data)
+        resp = s.recv(1024)
+        return resp
 
 
 ### Фронтенд
