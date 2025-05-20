@@ -101,7 +101,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     conn.sendall(b'ok')
                 elif spl[0] == "add_sensor":
                     sen = sensor(spl[1], spl[2], spl[3], spl[4])
-                    sen.append(sen)
+                    sensors.append(sen)
                     conn.sendall(b'ok')
 
 
