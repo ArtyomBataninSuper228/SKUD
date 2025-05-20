@@ -221,11 +221,30 @@ def sensors_callback(sender, data):
         with dpg.window(width=300, height=300):
             number_sensor=sensors.index(data)
             s=response(HOST, PORT, bytes(f'get_sensor\n{number_sensor}','utf8')).decode('utf-8')
-            dpg.add_text('Название: ' + s.split('\n')[0])
-            dpg.add_text('Расположение: ' + s.split('\n')[1])
-            dpg.add_text('ip: ' + s.split('\n')[2])
-            dpg.add_text('Порт: ' + s.split('\n')[3])
 
+
+            start_tag = dpg.last_item()
+            with dpg.group(horizontal=True):
+                dpg.add_text('Название: ')
+                dpg.add_input_text(default_value=s.split('\n')[0])
+            with dpg.group(horizontal=True):
+                dpg.add_text('Расположение: ')
+                dpg.add_input_text(default_value=s.split('\n')[1])
+            with dpg.group(horizontal=True):
+                dpg.add_text('ip: ')
+                dpg.add_input_text(default_value=s.split('\n')[2])
+            with dpg.group(horizontal=True):
+                dpg.add_text('Порт: ')
+                dpg.add_input_text(default_value=s.split('\n')[3])
+
+
+            def update_sensor():
+                name = dpg.get_value(start_tag+3)
+                locate = dpg.get_value(start_tag + 6)
+                ip = dpg.get_value(start_tag + 9)
+                port = dpg.get_value(start_tag + 12)
+                response(HOST,PORT,bytes(f'update_sensor\n{name}\n{locate}\n{ip}\n{port}\n{number_sensor}','utf8'))
+            dpg.add_button(label='Сохранить',callback=update_sensor)
 
 
 cameras = response(HOST, PORT, b"get_cameras").decode("utf-8").split("\n")
