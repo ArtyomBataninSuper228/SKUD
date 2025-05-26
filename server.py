@@ -163,7 +163,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     conn.sendall(b'ok')
 
                 else:
-
+                    print(data.decode("utf-8"))
                     conn.sendall(b"Error")
                 continue
 

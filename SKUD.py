@@ -3,6 +3,7 @@ import socket
 import logging
 
 
+
 class camera:
     def __init__(self, ip, location, name, port):
         self.ip = ip
