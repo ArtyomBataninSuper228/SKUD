@@ -70,8 +70,10 @@ PORT = int(settings["port"])  # The port used by the server
 def response(host,port,data):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host, port))
-        s.sendall(data)
+        dat = bytes(f"{settings["user"]}\n{settings["password"]}\n", "utf-8") + data
+        s.sendall(dat)
         resp = s.recv(1024)
+
         return resp
 
 
@@ -254,7 +256,9 @@ def sensors_callback(sender, data):
 
 
 cameras = response(HOST, PORT, b"get_cams").decode("utf-8").split("\n")
+print(cameras)
 doors = response(HOST, PORT, b"get_doors").decode("utf-8").split("\n")
+print(cameras)
 sensors = response(HOST, PORT, b"get_sensors").decode("utf-8").split("\n")
 #1
 cameras.pop(-1)

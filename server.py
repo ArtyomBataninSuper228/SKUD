@@ -73,6 +73,8 @@ def saving():
 t = Thread(target=saving)
 t.start()
 
+users = [("user", "password")]
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -81,89 +83,104 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         conn, addr = s.accept()
         with conn:
             print(f"Connected by {addr}")
-
-            while True:
-
-                data = conn.recv(1024)
-                st = data.decode('utf-8')
-                spl = st.split('\n')
-                if not data:
-                    break
-
-                elif data == b"get_time":
-                    conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
-                elif data == b"get_cams":
-                    res = ''
-                    for i in cams:
-                        res += i.name + "\n"
-                    conn.sendall(bytes(res, "utf-8"))
-                elif data == b"get_doors":
-                    res = ''
-                    for i in  doors:
-                        res += i.name + "\n"
-
-                    conn.sendall(bytes(res, "utf-8"))
-                elif data == b"get_sensors":
-                    res = ''
-                    for i in sensors:
-                        res += i.name + "\n"
-                    conn.sendall(bytes(res, "utf-8"))
-
-
-
-                elif spl[0] == 'get_camera':
-                    num = int(st.split()[1])
-                    cam = cams[num]
-                    res = f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}"
-                    conn.sendall(bytes(res, "utf-8"))
-                elif spl[0] == "get_door":
-                    num = int(st.split()[1])
-                    dor = doors[num]
-                    res = (f"{dor.name}\n{dor.location}\n{dor.ip}\n{dor.port}\n{dor.level}")
-                    conn.sendall(bytes(res, "utf-8"))
-                elif spl[0] == "get_sensor":
-                    num = int(st.split()[1])
-                    sen = sensors[num]
-                    res = (f"{sen.name}\n{sen.location}\n{sen.ip}\n{sen.port}")
-                    conn.sendall(bytes(res, "utf-8"))
-
-
-
-                elif spl[0] == "add_camera":
-                    cam = camera(spl[1], spl[2], spl[3], spl[4])
-                    cams.append(cam)
-                    print(spl[1], spl[2], spl[3], spl[4])
-                    conn.sendall(b'ok')
-                elif spl[0] == "add_door":
-                    dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
-                    doors.append(dor)
-                    conn.sendall(b'ok')
-                elif spl[0] == "add_sensor":
-                    sen = sensor(spl[1], spl[2], spl[3], spl[4])
-                    sensors.append(sen)
-                    conn.sendall(b'ok')
-
-
-
-                elif spl[0] == "update_camera":
-                    cam = camera(spl[1], spl[2], spl[3], spl[4])
-                    num = int(spl[5])
-                    cams[num]=cam
-                    conn.sendall(b'ok')
-                elif spl[0] == "update_door":
-                    dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
-                    print(spl[1], spl[2], spl[3], spl[4], spl[5])
-                    num = int(spl[6])
-                    doors[num]=dor
-                    conn.sendall(b'ok')
-                elif spl[0] == "update_sensor":
-                    sen = sensor(spl[1], spl[2], spl[3], spl[4])
-                    num = int(spl[5])
-                    sensors[num]= sen
-                    conn.sendall(b'ok')
-
-                else:
-                    print(data.decode("utf-8"))
-                    conn.sendall(b"Error")
+            data = conn.recv(1024)
+            st = data.decode('utf-8')
+            spl = st.split('\n')
+            if (spl[0], spl[1]) not in users:
+                conn.sendall(b"Undefined username or password")
+                conn.close()
                 continue
+
+            spl = spl[2:]
+            print(spl)
+
+            if not data:
+                break
+
+            elif spl[0] == "get_time":
+                conn.sendall(bytes(str(datetime.datetime.now()), "utf-8"))
+            elif spl[0] == "get_cams":
+                res = ''
+                for i in cams:
+                    res += i.name + "\n"
+                conn.sendall(bytes(res, "utf-8"))
+            elif spl[0] == "get_doors":
+                res = ''
+                for i in doors:
+                    res += i.name + "\n"
+
+                conn.sendall(bytes(res, "utf-8"))
+            elif spl[0] == "get_sensors":
+                res = ''
+                for i in sensors:
+                    res += i.name + "\n"
+                conn.sendall(bytes(res, "utf-8"))
+
+
+
+            elif spl[0] == 'get_camera':
+                num = int(spl[1])
+                cam = cams[num]
+                res = f"{cam.name}\n{cam.location}\n{cam.ip}\n{cam.port}"
+                conn.sendall(bytes(res, "utf-8"))
+            elif spl[0] == "get_door":
+                num = int(spl[1])
+                dor = doors[num]
+                res = (f"{dor.name}\n{dor.location}\n{dor.ip}\n{dor.port}\n{dor.level}")
+                conn.sendall(bytes(res, "utf-8"))
+            elif spl[0] == "get_sensor":
+                num = int(spl[1])
+                sen = sensors[num]
+                res = (f"{sen.name}\n{sen.location}\n{sen.ip}\n{sen.port}")
+                conn.sendall(bytes(res, "utf-8"))
+
+
+
+            elif spl[0] == "add_camera":
+                cam = camera(spl[1], spl[2], spl[3], spl[4])
+                cams.append(cam)
+                print(spl[1], spl[2], spl[3], spl[4])
+                conn.sendall(b'ok')
+            elif spl[0] == "add_door":
+                dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
+                doors.append(dor)
+                conn.sendall(b'ok')
+            elif spl[0] == "add_sensor":
+                sen = sensor(spl[1], spl[2], spl[3], spl[4])
+                sensors.append(sen)
+                conn.sendall(b'ok')
+
+
+
+            elif spl[0] == "update_camera":
+                cam = camera(spl[1], spl[2], spl[3], spl[4])
+                num = int(spl[5])
+                cams[num] = cam
+                conn.sendall(b'ok')
+            elif spl[0] == "update_door":
+                dor = door(spl[1], spl[2], spl[3], spl[4], spl[5])
+                print(spl[1], spl[2], spl[3], spl[4], spl[5])
+                num = int(spl[6])
+                doors[num] = dor
+                conn.sendall(b'ok')
+            elif spl[0] == "update_sensor":
+                sen = sensor(spl[1], spl[2], spl[3], spl[4])
+                num = int(spl[5])
+                sensors[num] = sen
+                conn.sendall(b'ok')
+
+            else:
+                print("error")
+                print(data.decode("utf-8"))
+                conn.sendall(b"Error")
+                conn.close()
+
+
+
+
+
+
+
+
+
 
