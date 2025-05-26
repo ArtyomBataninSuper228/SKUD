@@ -1,4 +1,4 @@
-textsz=317
+textsz=40
 host=46.45.15.136
 port=1032
 user=user
